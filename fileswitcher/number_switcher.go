@@ -32,6 +32,8 @@ func (switcher *NumberSwitcher) OlderFile() (string, error) {
 		return "", FileInvalidError
 	}
 
+	switcher.Index = newIndex
+
 	return fmt.Sprintf(switcher.Pattern, newIndex), nil
 }
 
@@ -47,15 +49,19 @@ func (switcher *NumberSwitcher) NewerFile() (string, error) {
 		return "", FileInvalidError
 	}
 
+	switcher.Index = newIndex
+
 	return fmt.Sprintf(switcher.Pattern, newIndex), nil
 }
 
-func (switcher *NumberSwitcher) SetMax(max int) {
+func (switcher *NumberSwitcher) SetMax(max int) *NumberSwitcher {
 	switcher.Max = max
+	return switcher
 }
 
-func (switcher *NumberSwitcher) SetMin(min int) {
+func (switcher *NumberSwitcher) SetMin(min int) *NumberSwitcher {
 	switcher.Min = min
+	return switcher
 }
 
 func (switcher *NumberSwitcher) IsValid(newIndex int) bool {
