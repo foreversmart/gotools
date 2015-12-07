@@ -5,11 +5,14 @@ import (
 )
 
 type NumberSwitcher struct {
-	Pattern  string
-	IsAscend bool
-	Index    int
-	Max      int
-	Min      int
+	Pattern      string
+	IsAscend     bool
+	Index        int
+	SpecialIndex int
+	SpecialValue string
+
+	Max int
+	Min int
 }
 
 func NewNumberSwitcher(pattern string, index int, isAscend bool) *NumberSwitcher {
@@ -21,6 +24,10 @@ func NewNumberSwitcher(pattern string, index int, isAscend bool) *NumberSwitcher
 }
 
 func (switcher *NumberSwitcher) CurrentFile() string {
+	if switcher.SpecialValue != "" && switcher.Index == switcher.SpecialIndex {
+		return switcher.SpecialValue
+	}
+
 	return fmt.Sprintf(switcher.Pattern, switcher.Index)
 }
 
@@ -38,7 +45,7 @@ func (switcher *NumberSwitcher) OlderFile() (string, error) {
 
 	switcher.Index = newIndex
 
-	return fmt.Sprintf(switcher.Pattern, newIndex), nil
+	return switcher.CurrentFile(), nil
 }
 
 func (switcher *NumberSwitcher) NewerFile() (string, error) {
@@ -55,7 +62,7 @@ func (switcher *NumberSwitcher) NewerFile() (string, error) {
 
 	switcher.Index = newIndex
 
-	return fmt.Sprintf(switcher.Pattern, newIndex), nil
+	return switcher.CurrentFile(), nil
 }
 
 func (switcher *NumberSwitcher) SetMax(max int) *NumberSwitcher {
@@ -66,6 +73,11 @@ func (switcher *NumberSwitcher) SetMax(max int) *NumberSwitcher {
 func (switcher *NumberSwitcher) SetMin(min int) *NumberSwitcher {
 	switcher.Min = min
 	return switcher
+}
+
+func (switcher *NumberSwitcher) SetSpecial(spec int, value string) {
+	switcher.SpecialIndex = spec
+	switcher.SpecialValue = value
 }
 
 func (switcher *NumberSwitcher) IsValid(newIndex int) bool {

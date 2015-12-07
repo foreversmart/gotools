@@ -30,6 +30,10 @@ func Test_NumberSwitcher(t *testing.T) {
 	assertion.Nil(err)
 	assertion.Equal("message.log.1", newerFile)
 
+	switcher.SetSpecial(0, "message.log")
+	newerFile, err = switcher.NewerFile()
+	assertion.Nil(err)
+	assertion.Equal("message.log", newerFile)
 }
 
 func Test_NumberSwitcher_Invalid(t *testing.T) {
