@@ -80,3 +80,7 @@ func (switcher *NumberSwitcher) IsValid(newIndex int) bool {
 
 	return true
 }
+
+func (switcher *NumberSwitcher) String() string {
+	return switcher.CurrentFile()
+}
