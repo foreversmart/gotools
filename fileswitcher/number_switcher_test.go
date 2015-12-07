@@ -23,6 +23,9 @@ func Test_NumberSwitcher(t *testing.T) {
 	assertion.Nil(err)
 	assertion.Equal("message.log.2", olderFile)
 
+	currentFile := switcher.CurrentFile()
+	assertion.Equal("message.log.2", currentFile)
+
 	newerFile, err := switcher.NewerFile()
 	assertion.Nil(err)
 	assertion.Equal("message.log.1", newerFile)

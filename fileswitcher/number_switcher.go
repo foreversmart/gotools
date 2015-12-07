@@ -20,6 +20,10 @@ func NewNumberSwitcher(pattern string, index int, isAscend bool) *NumberSwitcher
 	}
 }
 
+func (switcher *NumberSwitcher) CurrentFile() string {
+	return fmt.Sprintf(switcher.Pattern, switcher.Index)
+}
+
 func (switcher *NumberSwitcher) OlderFile() (string, error) {
 	newIndex := switcher.Index
 	if switcher.IsAscend {

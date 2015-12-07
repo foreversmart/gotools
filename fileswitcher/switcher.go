@@ -10,6 +10,7 @@ var (
 )
 
 type FileSwitcher interface {
+	CurrentFile() string
 	OlderFile() (string, error)
 	NewerFile() (string, error)
 }
