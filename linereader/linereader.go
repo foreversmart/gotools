@@ -32,8 +32,10 @@ func (lineReader *LineReader) Line() string {
 			lineReader.Mutex.Lock()
 			lineReader.LeftBytes = append(lineReader.LeftBytes, line...)
 			lineReader.Mutex.Unlock()
+		} else {
+			// log for other error
+			log.Println("line string error:", err.Error())
 		}
-		log.Println("line string error:", err.Error())
 		time.Sleep(time.Second * 1)
 		return lineReader.Line()
 	}
@@ -45,7 +47,8 @@ func (lineReader *LineReader) Reading() {
 	p := make([]byte, 1000)
 	for {
 		n, err := lineReader.Reader.Read(p)
-		if err != nil {
+		if err != nil && err != io.EOF {
+			// log for other error
 			log.Println("line reading error%v", err)
 		}
 
@@ -54,7 +57,12 @@ func (lineReader *LineReader) Reading() {
 		}
 
 		// if there is not enough content to read
-		if n < 300 {
+		if n <= 400 {
+			time.Sleep(time.Second * 2)
+		}
+
+		// if there is not enough content to read
+		if n > 400 && n < 800 {
 			time.Sleep(time.Second * 1)
 		}
 	}
