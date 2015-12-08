@@ -31,7 +31,6 @@ func (lineReader *LineReader) Line() string {
 		if err == io.EOF {
 			lineReader.Mutex.Lock()
 			lineReader.LeftBytes = append(lineReader.LeftBytes, line...)
-			log.Println(line)
 			lineReader.Mutex.Unlock()
 		}
 		log.Println("line string error:", err.Error())
