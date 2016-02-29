@@ -65,6 +65,8 @@ func (lineReader *LineReader) Reading() {
 		if n > 400 && n < 800 {
 			time.Sleep(time.Second * 1)
 		}
+
+		time.Sleep(time.Millisecond)
 	}
 }
 
